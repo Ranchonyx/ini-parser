@@ -1,0 +1,19 @@
+{
+  "name": "ini-parser",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "build/INIParser.js",
+  "scripts": {
+    "build": "npm run compile && npm run uglify",
+    "compile": "tsc",
+    "uglify": "uglifyjs --compress --source-map --output dist/INIParser.min.js -- build/INIParser.js",
+    "clean": "powershell -Command \" rm .\\dist\\* .\\build\\* \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.4.5"
+  }
+}
