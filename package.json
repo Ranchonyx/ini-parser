@@ -1,33 +1,33 @@
 {
-  "name": "@ranchonyx/ini-parser",
-  "version": "1.0.6",
-  "description": "A simple, relatively lightweight ini parser",
-  "main": "dist/index.js",
-  "devDependencies": {},
-  "scripts": {
-    "compile": "tsc",
-    "clean:win": "node -e \"if (process.platform === 'win32') process.exit(1)\" || , if exist dist del dist\\* /S /Q",
-    "clean:lin": "node -e \"if (process.platform !== 'win32') process.exit(1)\" || rm -rf dist/*",
-    "clean": "npm run clean:win && npm run clean:lin",
-    
-    "build": "npm run clean && npm run compile",
-    "gitpub": "npm run build && node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && git add . && git commit -m \"BUILD: %timestamp%\" && git push",
-    "npmpub": "npm publish --access public"
-},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ranchonyx/ini-parser.git"
-  },
-  "keywords": [
-    "INI",
-    "ini",
-    "parser",
-    "config"
-  ],
-  "author": "Felix Janetzki",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ranchonyx/ini-parser/issues"
-  },
-  "homepage": "https://github.com/ranchonyx/ini-parser#readme"
+    "name": "@ranchonyx/ini-parser",
+    "version": "1.0.6",
+    "description": "A simple, relatively lightweight ini parser",
+    "main": "dist/index.js",
+    "devDependencies": {},
+    "scripts": {
+        "compile": "tsc",
+        "clean:win": "node -e \"if (process.platform === 'win32') process.exit(1)\" || , if exist dist del dist\\* /S /Q",
+        "clean:lin": "node -e \"if (process.platform !== 'win32') process.exit(1)\" || rm -rf dist/*",
+        "clean": "npm run clean:win && npm run clean:lin",
+        "build": "npm run clean && npm run compile",
+        "commit": "npm run build && node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && git add . && git commit -m \"BUILD: %timestamp%\"",
+        "gitpub": "git push",
+        "npmpub": "npm publish --access public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ranchonyx/ini-parser.git"
+    },
+    "keywords": [
+        "INI",
+        "ini",
+        "parser",
+        "config"
+    ],
+    "author": "Felix Janetzki",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ranchonyx/ini-parser/issues"
+    },
+    "homepage": "https://github.com/ranchonyx/ini-parser#readme"
 }
