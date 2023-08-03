@@ -2,13 +2,13 @@ declare module '@ranchonyx/ini-parser' {
     /**
      * @description Union type describing several JS native types
      */
-    export type nativeType = string | number | boolean | Date;
+    export type JSNative = string | number | boolean | Date;
 
     /**
      * @template T
      * @description Generic union type describing either undefined or T
      */
-    export type maybe<T> = undefined | T;
+    export type Maybe<T> = undefined | T;
 
     /**
      * Interface for an INI entity.
@@ -21,11 +21,11 @@ declare module '@ranchonyx/ini-parser' {
      */
     export interface INIEntity {
         getKey: () => string;
-        asNumber: () => maybe<number>;
-        asString: () => maybe<string>;
-        asBoolean: () => maybe<boolean>;
-        asDate: () => maybe<Date>;
-        asGuessedNative: () => nativeType;
+        asNumber: () => Maybe<number>;
+        asString: () => Maybe<string>;
+        asBoolean: () => Maybe<boolean>;
+        asDate: () => Maybe<Date>;
+        asGuessedNative: () => JSNative;
     }
 
     /**
@@ -73,6 +73,6 @@ declare module '@ranchonyx/ini-parser' {
          */
         public asJSON(): any;
 
-        toJSON(): ReturnType<INIParser["asJSON"]>;
+        private toJSON(): ReturnType<INIParser["asJSON"]>;
     }
 }
