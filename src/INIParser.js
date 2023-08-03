@@ -166,6 +166,9 @@ var INIParser = /** @class */ (function () {
         }
         return obj;
     };
+    INIParser.prototype.toJSON = function () {
+        return this.asJSON();
+    };
     INIParser.prototype.getSections = function () {
         return Object.keys(this.result);
     };

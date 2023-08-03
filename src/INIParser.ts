@@ -198,6 +198,10 @@ export default class INIParser {
         return obj;
     }
 
+    public toJSON() {
+        return this.asJSON();
+    }
+
     public getSections(): string[] {
         return Object.keys(this.result);
     }
