@@ -1,13 +1,17 @@
-type nativeType = string | number | boolean | Date;
-type maybe<T> = undefined | T;
-type INIEntity = {
+export type JSNative = string | number | boolean | Date;
+export type Maybe<T> = undefined | T;
+export type INIEntity = {
     getKey: () => string;
-    asNumber: () => maybe<number>;
-    asString: () => maybe<string>;
-    asBoolean: () => maybe<boolean>;
-    asDate: () => maybe<Date>;
-    asGuessedNative: () => nativeType;
+    asNumber: () => Maybe<number>;
+    asString: () => Maybe<string>;
+    asBoolean: () => Maybe<boolean>;
+    asDate: () => Maybe<Date>;
+    asGuessedNative: () => JSNative;
 };
+export type INIBlock = Record<string, INIEntity | string> & {
+    __ini_section_name__: string;
+};
+export type INIParseResult = Record<string, INIBlock>;
 export declare class INIParser {
     private content;
     private result;
@@ -17,8 +21,7 @@ export declare class INIParser {
     get(section: string, key: string): INIEntity;
     getKeysForSection(section: string): string[];
     asJSON(): any;
-    toJSON(): any;
+    private toJSON;
     getSections(): string[];
 }
-export {};
 //# sourceMappingURL=index.d.ts.map

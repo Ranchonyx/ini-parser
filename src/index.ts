@@ -1,21 +1,21 @@
 import { existsSync, readFileSync } from "node:fs"
 import { EOL } from "node:os";
 
-type nativeType = string | number | boolean | Date;
-type maybe<T> = undefined | T;
+export type JSNative = string | number | boolean | Date;
+export type Maybe<T> = undefined | T;
 
-type INIEntity = {
+export type INIEntity = {
     getKey: () => string;
-    asNumber: () => maybe<number>;
-    asString: () => maybe<string>;
-    asBoolean: () => maybe<boolean>;
-    asDate: () => maybe<Date>;
-    asGuessedNative: () => nativeType;
+    asNumber: () => Maybe<number>;
+    asString: () => Maybe<string>;
+    asBoolean: () => Maybe<boolean>;
+    asDate: () => Maybe<Date>;
+    asGuessedNative: () => JSNative;
 }
 
-type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: string };
+export type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: string };
 
-type INIParseResult = Record<string, INIBlock>;
+export type INIParseResult = Record<string, INIBlock>;
 
 export class INIParser {
     private content!: string;
@@ -198,7 +198,7 @@ export class INIParser {
         return obj;
     }
 
-    public toJSON() {
+    private toJSON() {
         return this.asJSON();
     }
 
