@@ -22,6 +22,7 @@ export declare class INIParser {
     getKeysForSection(section: string): string[];
     asJSON(): any;
     private toJSON;
+    get [Symbol.toStringTag](): string;
     getSections(): string[];
 }
 //# sourceMappingURL=index.d.ts.map

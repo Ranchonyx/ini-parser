@@ -157,6 +157,9 @@ class INIParser {
     toJSON() {
         return this.asJSON();
     }
+    get [Symbol.toStringTag]() {
+        return "[object INIParser]";
+    }
     getSections() {
         return Object.keys(this.result);
     }
