@@ -17,7 +17,7 @@ type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: str
 
 type INIParseResult = Record<string, INIBlock>;
 
-export default class INIParser {
+export class INIParser {
     private content!: string;
     private result: INIParseResult = {};
 

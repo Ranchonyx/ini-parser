@@ -8,7 +8,7 @@ type INIEntity = {
     asDate: () => maybe<Date>;
     asGuessedNative: () => nativeType;
 };
-export default class INIParser {
+export declare class INIParser {
     private content;
     private result;
     static GetParser: (INIContentOrFilePath: string) => INIParser;

@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.INIParser = void 0;
 const node_fs_1 = require("node:fs");
 const node_os_1 = require("node:os");
 class INIParser {
@@ -166,5 +167,5 @@ INIParser.GetParser = (INIContentOrFilePath) => {
     else
         return new INIParser((0, node_fs_1.readFileSync)(INIContentOrFilePath, "utf-8"), true);
 };
-exports.default = INIParser;
+exports.INIParser = INIParser;
 //# sourceMappingURL=index.js.map
