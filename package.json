@@ -11,7 +11,7 @@
     "clean": "npm run clean:win && npm run clean:lin",
     
     "build": "npm run clean && npm run compile",
-    "publish": "node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && git add . && git commit -m \"BUILD: %timestamp%\" && git push && npm publish --access public"
+    "publish": "npm run build && node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && git add . && git commit -m \"BUILD: %timestamp%\" && git push && npm publish --access public"
 },
   "repository": {
     "type": "git",
