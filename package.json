@@ -2,7 +2,6 @@
   "name": "ini-parser",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "build/INIParser.js",
   "scripts": {
     "build": "npm run compile && npm run uglify",
