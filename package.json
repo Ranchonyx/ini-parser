@@ -10,7 +10,7 @@
         "clean:lin": "node -e \"if (process.platform !== 'win32') process.exit(1)\" || rm -rf dist/*",
         "clean": "npm run clean:win && npm run clean:lin",
         "build": "npm run clean && npm run compile",
-        "commit": "npm run build && node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && git add . && git commit -m \"BUILD: %timestamp%\"",
+        "commit": "npm run build && node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && sleep 1 && git add . && git commit -m \"BUILD: %timestamp%\"",
         "gitpub": "git push",
         "npmpub": "npm publish --access public"
     },
