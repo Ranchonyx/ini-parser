@@ -10,8 +10,7 @@
         "clean:lin": "node -e \"if (process.platform !== 'win32') process.exit(1)\" || rm -rf dist/*",
         "clean": "npm run clean:win && npm run clean:lin",
         "build": "npm run clean && npm run compile",
-        "AAAAA":"A",
-        "commit": "npm run build && powershell -Command git commit -a -m 'BUILD: $(Get-Date)' ",
+        "commit": "npm run build && git commit -a -m BUILD_%time%_%date%",
         "gitpub": "git push",
         "npmpub": "npm publish --access public"
     },
