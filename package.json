@@ -1,18 +1,32 @@
 {
-  "name": "ini-parser",
+  "name": "@ranchonyx/ini-parser",
   "version": "1.0.0",
-  "description": "",
-  "main": "build/INIParser.js",
+  "description": "A simple, relatively lightweight ini parser",
+  "main": "build/index.js",
+  "devDependencies": {},
   "scripts": {
     "build": "npm run compile && npm run uglify",
     "compile": "tsc",
     "uglify": "uglifyjs --compress --source-map --output dist/INIParser.min.js -- build/INIParser.js",
-    "clean": "powershell -Command \" rm .\\dist\\* .\\build\\* \""
+    "clean": "npm run clean:win && npm run clean:lin",
+    "clean:win": "node -e \"if (process.platform === 'win32') process.exit(1)\" || , if exist dist del dist\\* /S /Q && if exist build del build\\* /S /Q",
+    "clean:lin": "node -e \"if (process.platform !== 'win32') process.exit(1)\" || rm -rf dist/* build/*",
+    "gitpub": "node -e \"process.stdout.write(new Date().toISOString())\" > tmp && set /p timestamp= < tmp && del tmp && git add . && git commit -m \"BUILD: %timestamp%\""
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranchonyx/ini-parser.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "INI",
+    "ini",
+    "parser",
+    "config"
+  ],
+  "author": "Felix Janetzki",
   "license": "MIT",
-  "devDependencies": {
-    "@types/node": "^20.4.5"
-  }
+  "bugs": {
+    "url": "https://github.com/ranchonyx/ini-parser/issues"
+  },
+  "homepage": "https://github.com/ranchonyx/ini-parser#readme"
 }
