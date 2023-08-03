@@ -12,7 +12,7 @@ export type INIEntity = {
     asDate: () => Maybe<Date>;
     asGuessedNative: () => JSNative;
 }
-
+//ja
 export type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: string };
 
 export type INIParseResult = Record<string, INIBlock>;
