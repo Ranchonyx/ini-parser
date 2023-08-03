@@ -10,7 +10,7 @@ type INIEntity = {
     asString: () => maybe<string>;
     asBoolean: () => maybe<boolean>;
     asDate: () => maybe<Date>;
-    asGuessedNative: () => maybe<nativeType>;
+    asGuessedNative: () => nativeType;
 }
 
 type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: string };
