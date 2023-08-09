@@ -1,6 +1,6 @@
 {
     "name": "@ranchonyx/ini-parser",
-    "version": "1.0.7",
+    "version": "1.1.2",
     "description": "A simple, relatively lightweight ini parser",
     "main": "dist/index.js",
     "devDependencies": {},
@@ -11,8 +11,9 @@
         "clean": "npm run clean:win && npm run clean:lin",
         "build": "npm run clean && npm run compile",
         "commit": "npm run build && git commit -a -m BUILD_%time%_%date%",
-        "gitpub": "git push",
-        "npmpub": "npm publish --access public"
+        "pub:git": "git push",
+        "pub:npm": "npm publish --access public",
+        "pub:full": "npm run pub:git && npm run pub:npm"
     },
     "repository": {
         "type": "git",

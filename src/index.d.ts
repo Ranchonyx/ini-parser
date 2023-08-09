@@ -11,13 +11,13 @@ declare module '@ranchonyx/ini-parser' {
     export type Maybe<T> = undefined | T;
 
     /**
-     * Interface for an INI entity.
+     * Interface describing an INI entity.
      * @method getKey() - Returns the INI key of the entity
      * @method asNumber() - Interprets the entity value as a number
      * @method asString() - Interprets the entity value as a string
      * @method asBoolean() - Interprets the entity value as a boolean
      * @method asDate() - Interprets the entity value as a date
-     * @method asGuessedNative() - Interprets the entity as a js native value 
+     * @method asGuessedNative() - Interprets the entity as a js native value
      */
     export interface INIEntity {
         getKey: () => string;
@@ -31,7 +31,7 @@ declare module '@ranchonyx/ini-parser' {
     /**
      * Dictionary type representing a section of an INI file
      */
-    export type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: string };
+    export type INIBlock = Record<string, INIEntity> & { __ini_section_name__: string };
     
     /**
      * Dictionary type representing an INI file
@@ -61,11 +61,14 @@ declare module '@ranchonyx/ini-parser' {
         public get(section: string, key: string): INIEntity;
 
         /**
-         * Get the keys for anINI section
+         * Get the keys for an INI section
          * @param section The section name which to query the keys for
          */
         public getKeysForSection(section: string): string[];
 
+        /**
+         * Query all INI sections
+         */
         public getSections(): string[];
 
         /**
@@ -73,6 +76,9 @@ declare module '@ranchonyx/ini-parser' {
          */
         public asJSON(): any;
 
+        /**
+         * Used by JSON.stringify(), simply returns asJSON()
+         */
         private toJSON(): ReturnType<INIParser["asJSON"]>;
     }
 }

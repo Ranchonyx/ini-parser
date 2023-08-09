@@ -11,14 +11,14 @@ export type INIEntity = {
     asBoolean: () => Maybe<boolean>;
     asDate: () => Maybe<Date>;
     asGuessedNative: () => JSNative;
+    toString: () => string;
 }
 
-export type INIBlock = Record<string, INIEntity | string> & { __ini_section_name__: string };
+export type INIBlock = Record<string, INIEntity> & { __ini_section_name__: string };
 
 export type INIParseResult = Record<string, INIBlock>;
 
 export class INIParser {
-    private content: string;
     private result: INIParseResult = {};
 
     public static GetParser = (INIContentOrFilePath: string): INIParser => {
@@ -28,18 +28,21 @@ export class INIParser {
     }
 
     private constructor(INIContent: string, viaGetParser: boolean = false) {
-        if (!viaGetParser) throw new Error("Can only instantia INIParser via \'INIParser.GetParser()\' !")
-        this.content = INIContent;
-        this.parseSelf();
+        if (!viaGetParser) throw new Error("Can only instantiate INIParser via \'INIParser.GetParser()\' !")
+        this.parseSelf(INIContent);
     }
 
-    private parseSelf() {
+    private parseSelf(content: string) {
         let line = 0;
-        let cleanedINI = this.content.split(EOL)
-            .filter(line => (line.length !== 0) && (line !== "\t")) //Filter trailing or empty filler lines
-            .filter(line => !line.startsWith(";")) //Filter comments
-            .map(line => line.trimEnd().trimStart()) //Trim ends
-            .map(line => line.toLowerCase()); //Ignore text case
+
+        let cleanedINI: string[] = [];
+        const lnDelm = content.split(EOL).length <= 1 ? "\n" : EOL;
+
+        for(const line of content.split(lnDelm)) {
+            if(line.length !== 0 && line !== "\t" && !line.startsWith(";")) {
+                cleanedINI.push(line.trim().toLowerCase());
+            }
+        }
 
         const iniBlocks: INIBlock[] = [];
 
@@ -68,7 +71,8 @@ export class INIParser {
                     if (predicate(ln)) {
                         linesBetween.push(ln)
                     } else {
-                        --line; break;
+                        --line;
+                        break;
                     };
                 } else break;
             }
@@ -82,7 +86,7 @@ export class INIParser {
         const skip_ini_pair = (cleanINIContent: string[]) =>
             skip_ini_while(cleanINIContent, (line: string) => line.match(/\[.*?\]/) !== null);
 
-        function consumeCleanedINI(cleanINIContent: string[]) {
+        function consume_ini_toks(cleanINIContent: string[]) {
             //Get ini block header
             const headers = skip_ini_pair(cleanINIContent);
             const header = (headers[0] || "").slice(1, -1);
@@ -90,7 +94,7 @@ export class INIParser {
             //Get ini block pairs
             const pairs = (skip_ini_header(cleanINIContent)).map(pair => pair.split("="));
 
-            //Create ini-entity subparser from pairs
+            //Create ini-entity subparsers from pairs
             const entities: INIEntity[] = [];
             for (const pair of pairs) {
                 if (pair.length < 2) throw new Error(`Invalid INI pair \'${JSON.stringify(pair, null, 2)}\' in section \'${header}\'`);
@@ -102,7 +106,7 @@ export class INIParser {
                 entities.push({
                     getKey: () => pair[0],
                     asString: () => pair[1],
-                    asBoolean: () => isBool() ? Boolean(coerceIniBool(pair[1])) : undefined,
+                    asBoolean: () => isBool() ? coerceIniBool(pair[1]) : undefined,
                     asNumber: () => isNumber() ? parseFloat(pair[1]) : undefined,
                     asDate: () => isDate() ? new Date(pair[1]) : undefined,
                     asGuessedNative: () => {
@@ -114,7 +118,8 @@ export class INIParser {
                         else if (isBool())
                             return Boolean(p1);
                         else return p1;
-                    }
+                    },
+                    toString: () => pair[0]
                 });
             }
 
@@ -130,7 +135,7 @@ export class INIParser {
             });
 
             for (const entity of entities) {
-                block[entity.getKey()] = entity;
+                block[entity as unknown as string] = entity;
             }
 
             //Push ini block
@@ -145,13 +150,13 @@ export class INIParser {
             //Bail if sliceLen === 0
             if (sliceLen === 0) return;
 
-            //Recursively call self with increasingly smaller slices
+            //Slice cleanedINI so it consumes less memory for each iteration
             cleanedINI = cleanedINI.slice(sliceLen);
         }
 
         //Consume self...
         while (cleanedINI.length > 0) {
-            consumeCleanedINI(cleanedINI);
+            consume_ini_toks(cleanedINI);
         }
 
         for (const block of iniBlocks) {
@@ -198,12 +203,12 @@ export class INIParser {
         return obj;
     }
 
-    private toJSON() {
+    private toJSON(): ReturnType<INIParser["asJSON"]> {
         return this.asJSON();
     }
 
-    public get [Symbol.toStringTag]() : string {
-        return "[object INIParser]";
+    public get [Symbol.toStringTag](): string {
+        return "INIParser";
     }
 
     public getSections(): string[] {
